@@ -1,16 +1,9 @@
-# Load Libraries 
 
 library(tidyverse)
 library(lubridate)
 library(dbplyr)
 
-# Load Data 
-
-# Create data directory
-
 if(!dir.exists("data")) { dir.create("data") }
-
-# Download and unzip data file
 
 file.url   <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 file.path  <- "data/household_power_consumption.zip"
@@ -20,8 +13,6 @@ if(!file.exists(file.path) & !file.exists(file.unzip)) {
   download.file(file.url, file.path)
   unzip(file.path, exdir = "data")
 }
-
-# Load data from 2007-02-01 to 2007-02-02
 
 data <- read_delim("data/household_power_consumption.txt",
                    delim = ";",
@@ -37,14 +28,10 @@ data <- read_delim("data/household_power_consumption.txt",
                                     col_number())) %>%
   filter(between(Date, as.Date("2007-02-01"), as.Date("2007-02-02")))
 
-# Make Plot 
-
 hist(data$Global_active_power,
      xlab = "Global Active Power (kilowatts)",
      col  = "red",
      main = "Global Active Power")
-
-# Save Plot 
 
 dev.copy(png, "plot1.png",
          width  = 480,
